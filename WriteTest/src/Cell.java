@@ -2,7 +2,7 @@
 public class Cell {
 	private int x,y;
 	private int type; //0 empty //1 path //2 start
-	private boolean selected;
+	private boolean visited;
 	public Cell(int x, int y, int type) {
 		this.setX(x);
 		this.setY(y);
@@ -36,15 +36,11 @@ public class Cell {
 
 
 
-	public boolean isSelected() {
-		return selected;
+	public boolean isVisited() {
+		return visited;
 	}
-
-
-
-
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
+	
+	public void setVisited(boolean selected) {
+		this.visited = selected;
 	}
 }
