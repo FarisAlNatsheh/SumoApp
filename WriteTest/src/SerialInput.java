@@ -12,7 +12,8 @@ public class SerialInput{
 	}
 	public void findPort() {
 		SerialPort[] ports = SerialPort.getCommPorts();
-
+		for (SerialPort port: ports) 
+			System.out.println(port.getSystemPortName());
 		for (SerialPort port: ports) {
 			if(port.getSystemPortName().equals(portName)) {
 				mainPort = port;
@@ -25,7 +26,9 @@ public class SerialInput{
 		System.exit(0);
 	}
 	public static void main(String args[]) {
-		new SerialInput("COM4");
+		new SerialInput("COM27");
+		//23
+		//27
 
 	}
 	public void run() {
