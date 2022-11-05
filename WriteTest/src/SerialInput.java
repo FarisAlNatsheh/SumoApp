@@ -18,7 +18,7 @@ public class SerialInput{
 			if(port.getSystemPortName().equals(portName)) {
 				mainPort = port;
 				System.out.println("Port found");
-				run();
+				//run();
 				return;
 			}
 		}
@@ -31,8 +31,8 @@ public class SerialInput{
 		//27
 
 	}
-	public void run() {
-		
+	public void command(byte command) {
+
 		SerialPort userPort = mainPort;
 
 		//Initializing port
@@ -46,11 +46,11 @@ public class SerialInput{
 			System.out.println("Port not available");
 			return;
 		}
-		userPort.writeBytes(new byte[] {98}, 1);
-		Scanner in = new Scanner(System.in);
-		while(true) {
-			userPort.writeBytes(new byte[] {in.nextByte()}, 1);
-		}
+		//userPort.writeBytes(new byte[] {98}, 1);
+		//Scanner in = new Scanner(System.in);
+		//while(true) {
+		userPort.writeBytes(new byte[] {command}, 1);
+		//}
 
 	}
 }

@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -17,6 +19,7 @@ public class Window2 extends JFrame{
 	String path="";
 	int currX=startX, currY=startY;
 	int order;
+	Node netNode;
 	public void clear() {
 		path = "";
 		currentDir = 0;
@@ -51,11 +54,14 @@ public class Window2 extends JFrame{
 	}
 
 
-	public Window2() {
+	public Window2(String ip, int port) {
 		clear();
 		setTitle("Sumo App");
 		setSize(cellSize*(mapSize+1)+200,cellSize*(mapSize+1));
-		startServerSocket(5000);
+		netNode = new Node();
+		netNode.startServerSocket(port);
+		netNode.startSendSocket(ip,port);
+		
 		drawPanel = new JPanel() {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -141,7 +147,8 @@ public class Window2 extends JFrame{
 
 			public void mousePressed(MouseEvent e) {
 				//clear();
-
+				//netNode.sendMessage("hi");
+				System.out.println(netNode.getLastMessage());
 				for(int i =0; i < mapSize; i++) {
 					for(int j =0; j < mapSize; j++) {
 						cells[i][j].setVisited(false);
@@ -213,33 +220,13 @@ public class Window2 extends JFrame{
 					cells[startX][startY].setType(2);
 				}	
 				System.out.println(path);
+				netNode.sendMessage(path);
 			}
 		});
 	}
-	private ServerSocket ss;
-	private Socket s;
-	private DataInputStream dis;
-	public void startServerSocket(final int port) {
-		new Thread()
-		{
-			public void run() {
-				try{  
-					ss=new ServerSocket(port);  
-					s=ss.accept();//establishes connection
-					System.out.println("Server started");
-					while(true) {
-						dis=new DataInputStream(s.getInputStream());  
-						String  str=(String)dis.readUTF();  
-
-						System.out.println(str + " " + port);
-					}
-					//ss.close();  
-				}catch(Exception e){}  
-			} 
-		}.start();
-	}
+	
 	public static void main(String[] args) {
-		new Window2();
+		new Window2("127.0.0.1",5000);
 	}
 
 }
