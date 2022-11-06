@@ -20,7 +20,7 @@ public class AdminWindow extends JFrame implements ActionListener{
 	public AdminWindow() {
 		timer.start(); 
 		player1Serial = new SerialInput("COM27");
-		player2Serial = new SerialInput("COM24");
+		player2Serial = new SerialInput("COM23");
 		netNode1 = new Node();
 		netNode2 = new Node();
 		setTitle("Sumo App");
@@ -52,8 +52,12 @@ public class AdminWindow extends JFrame implements ActionListener{
 						}
 						player1Serial.command((byte) (101));
 					}
+				}
+				catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, "Could not connect to Serial port (Check Bluetooth connection)", "Player 1 Error", JOptionPane.ERROR_MESSAGE);
+				}
 
-
+				try {
 					for(int i =0; i < lastMsg2.length(); i++) {
 						if(lastMsg2.charAt(i) == 'a') {
 							player2Serial.command((byte) (97));
@@ -68,7 +72,7 @@ public class AdminWindow extends JFrame implements ActionListener{
 					}
 				}
 				catch(Exception e1) {
-			        JOptionPane.showMessageDialog(null, "Could not connect to Serial port (Check Bluetooth connection)", "Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Could not connect to Serial port (Check Bluetooth connection)", "Player 2 Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 
