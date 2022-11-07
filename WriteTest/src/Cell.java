@@ -59,10 +59,6 @@ public class Cell {
 		return order;
 	}
 
-
-
-
-
 	public void setOrder(String order) {
 		if(this.order != null) {
 			this.order += "/" + order;
@@ -71,17 +67,9 @@ public class Cell {
 		this.order = order;
 	}
 
-
-
-
-
 	public int getClicks() {
 		return clicks;
 	}
-
-
-
-
 
 	public void setClicks(int clicks) {
 		this.clicks = clicks;

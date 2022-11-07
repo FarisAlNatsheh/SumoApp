@@ -17,18 +17,18 @@ public class AdminWindow extends JFrame implements ActionListener{
 	JTextArea player1 = new JTextArea();
 	JTextArea player2 = new JTextArea();
 	JButton start = new JButton("Start");
-	public AdminWindow() {
+	public AdminWindow(String ip1, String ip2) {
 		timer.start(); 
 		player1Serial = new SerialInput("COM27");
-		player2Serial = new SerialInput("COM23");
+		player2Serial = new SerialInput("COM20");
 		netNode1 = new Node();
 		netNode2 = new Node();
 		setTitle("Sumo App");
 		setSize(500,500);
 		netNode1.startServerSocket(5000);
-		netNode1.startSendSocket("127.0.0.1", 5001);
+		netNode1.startSendSocket(ip1, 5001);
 		netNode2.startServerSocket(6000);
-		netNode2.startSendSocket("127.0.0.1", 6001);
+		netNode2.startSendSocket(ip2, 6001);
 		drawPanel = new JPanel();
 		getContentPane().add(drawPanel);
 		add(drawPanel);
@@ -81,14 +81,14 @@ public class AdminWindow extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	public static void main(String[] args) {
-		new AdminWindow();
-	}
 	public void actionPerformed(ActionEvent e) {
 		lastMsg1 = netNode1.getLastMessage();
 		lastMsg2 = netNode2.getLastMessage();
 		//System.out.println(lastMsg1);
 		//System.out.println(lastMsg2);
+		lastMsg1 = "aaa";
+		lastMsg2 = "aaa";
+		
 		player1.setText("Player 1:\n\n "+ lastMsg1);
 		player2.setText("Player 2:\n\n "+ lastMsg2);
 	}

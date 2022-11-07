@@ -25,12 +25,12 @@ public class SerialTest{
 		System.out.println("Port not found, exiting...");
 		System.exit(0);
 	}
-	public static void main(String args[]) {
-		new SerialTest("COM23");
-		//23
-		//27
-
-	}
+//	public static void main(String args[]) {
+//		new SerialTest("COM23");
+//		//23
+//		//27
+//
+//	}
 	public void command(byte command) {
 
 		SerialPort userPort = mainPort;
@@ -49,8 +49,12 @@ public class SerialTest{
 		userPort.writeBytes(new byte[] {98}, 1);
 		Scanner in = new Scanner(System.in);
 		while(true) {
-			userPort.writeBytes(new byte[] {command}, 1);
+			System.out.println("enter command");
+			userPort.writeBytes(new byte[] {in.nextByte()}, 1);
 		}
 
+	}
+	public static void main(String[] args) {
+		new SerialTest("COM22");
 	}
 }

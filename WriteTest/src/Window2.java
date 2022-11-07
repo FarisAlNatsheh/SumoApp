@@ -225,8 +225,8 @@ public class Window2 extends JFrame{
 		});
 	}
 	
-	public static void main(String[] args) {
-		new Window2("127.0.0.1",5000);
-	}
+//	public static void main(String[] args) {
+//		new Window2("127.0.0.1",5000);
+//	}
 
 }

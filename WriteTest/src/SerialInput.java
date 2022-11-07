@@ -25,12 +25,12 @@ public class SerialInput{
 		System.out.println("Port not found, exiting...");
 		System.exit(0);
 	}
-	public static void main(String args[]) {
-		new SerialInput("COM27");
-		//23
-		//27
-
-	}
+//	public static void main(String args[]) {
+//		new SerialInput("COM27");
+//		//23
+//		//27
+//
+//	}
 	public void command(byte command) {
 
 		SerialPort userPort = mainPort;
