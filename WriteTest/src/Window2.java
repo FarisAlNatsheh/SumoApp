@@ -35,6 +35,7 @@ public class Window2 extends JFrame implements KeyListener{
 	int order;
 	Node netNode;
 	public void clear() {
+		order = 0;
 		path = "";
 		currentDir = 0;
 		for(int i =0; i < mapSize; i++) {
@@ -43,7 +44,14 @@ public class Window2 extends JFrame implements KeyListener{
 
 			}
 		}
+		startX=mapSize/2;
+		startY=mapSize-1;
+		currX = startX;
+		currY = startY;
 		cells[startX][startY].setType(2);
+		
+		refresh();
+		repaint();
 	}
 	public void clearPath() {
 		order = 0;
@@ -166,6 +174,9 @@ public class Window2 extends JFrame implements KeyListener{
 						g.fillRect(0,0, cellSize*(mapSize+1)+200,cellSize*(mapSize+1));
 					if(lastMsg.equals("a")) {
 						clearPath();
+					}
+					if(lastMsg.equals("r")) {
+						clear();
 					}
 				}
 				catch(Exception e) {

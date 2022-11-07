@@ -127,8 +127,8 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 		lastMsg2 = netNode2.getLastMessage();
 		//System.out.println(lastMsg1);
 		//System.out.println(lastMsg2);
-		lastMsg1 = "aaa";
-		lastMsg2 = "aaa";
+		lastMsg1 = "alr";
+		lastMsg2 = "rla";
 
 		player1.setText("Player 1:\n\n "+ lastMsg1);
 		player2.setText("Player 2:\n\n "+ lastMsg2);
@@ -171,6 +171,17 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 			else if (e.getKeyCode() == KeyEvent.VK_D) {
 				player1Serial.command((byte) ('D'));
 			}
+		}
+		if(e.getKeyCode() == KeyEvent.VK_R) {
+			netNode1.sendMessage("r");
+			netNode2.sendMessage("r");
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			netNode1.sendMessage("l");
+			netNode2.sendMessage("l");
 		}
 	}
 	@Override
