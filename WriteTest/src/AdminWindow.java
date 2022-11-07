@@ -21,7 +21,7 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 	JButton start = new JButton("Start");
 	JButton ready = new JButton("Ready");
 	boolean switch1 = true;
-	boolean ready1;
+	boolean ready1 = true;
 	public AdminWindow(String ip1, String ip2) {
 		timer.start(); 
 		player1Serial = new SerialInput("COM17");
@@ -54,6 +54,7 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 				if(ready1) {
 					netNode1.sendMessage("b");
 					netNode2.sendMessage("b");
+					ready.setText("Not Ready");
 				}
 				else {
 					netNode1.sendMessage("a");
@@ -65,6 +66,7 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 					}
 					netNode1.sendMessage("l");
 					netNode2.sendMessage("l");
+					ready.setText("Ready");
 				}
 				ready1 = !ready1;
 			}
@@ -76,6 +78,7 @@ public class AdminWindow extends JFrame implements ActionListener, KeyListener{
 				netNode1.sendMessage("b");
 				netNode2.sendMessage("b");
 				ready1 = false;
+				ready.setText("Not Ready");
 				try {
 					for(int i =0; i < lastMsg1.length(); i++) {
 						if(lastMsg1.charAt(i) == 'a') {
