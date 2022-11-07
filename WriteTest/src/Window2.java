@@ -1,4 +1,8 @@
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.DataInputStream;
@@ -9,8 +13,18 @@ import java.net.Socket;
 
 import javax.swing.*;
 
-public class Window2 extends JFrame{
+public class Window2 extends JFrame implements KeyListener{
 	JPanel drawPanel;
+	String lastMsg;
+	Timer timer = new Timer(50, new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			lastMsg = netNode.getLastMessage();
+		}
+
+
+	});
 	int mapSize =5;
 	int cellSize= 150;
 	int mouseX, mouseY;
@@ -30,6 +44,20 @@ public class Window2 extends JFrame{
 			}
 		}
 		cells[startX][startY].setType(2);
+	}
+	public void clearPath() {
+		order = 0;
+		startX = currX;
+		startY= currY;
+		for(int i =0; i < mapSize; i++) {
+			for(int j =0; j < mapSize; j++) {
+				cells[i][j] = new Cell(i,j,0);
+
+			}
+		}
+		cells[startX][startY].setType(2);
+		refresh();
+		repaint();
 	}
 	int currentDir = 0; //1 left 2 right 3 down 0 up
 	public void refresh() {
@@ -55,13 +83,14 @@ public class Window2 extends JFrame{
 
 
 	public Window2(String ip, int port) {
+		this.addKeyListener(this);
 		clear();
 		setTitle("Sumo App");
 		setSize(cellSize*(mapSize+1)+200,cellSize*(mapSize+1));
 		netNode = new Node();
-		netNode.startServerSocket(port);
+		netNode.startServerSocket(port+1);
 		netNode.startSendSocket(ip,port);
-		
+
 		drawPanel = new JPanel() {
 			public void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -132,12 +161,23 @@ public class Window2 extends JFrame{
 							g.drawString(""+cells[i][j].getOrder(),i*cellSize+cellSize/2, j*cellSize+cellSize/2);
 					}
 				}
+				try {
+					if(lastMsg.equals("b"))
+						g.fillRect(0,0, cellSize*(mapSize+1)+200,cellSize*(mapSize+1));
+					if(lastMsg.equals("a")) {
+						clearPath();
+					}
+				}
+				catch(Exception e) {
+					
+				}
 				repaint();
 
 			}
 		};
 		getContentPane().add(drawPanel);
 		add(drawPanel);
+		timer.start();
 		drawPanel.setBackground(Color.white);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -146,6 +186,13 @@ public class Window2 extends JFrame{
 		addMouseListener(new MouseAdapter() {
 
 			public void mousePressed(MouseEvent e) {
+				try {
+					if(lastMsg.equals("b"))
+						return;
+				}
+				catch(Exception e1) {
+					
+				}
 				//clear();
 				//netNode.sendMessage("hi");
 				System.out.println(netNode.getLastMessage());
@@ -224,9 +271,25 @@ public class Window2 extends JFrame{
 			}
 		});
 	}
-	
-//	public static void main(String[] args) {
-//		new Window2("127.0.0.1",5000);
-//	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		clearPath();
+
+
+	}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	//	public static void main(String[] args) {
+	//		new Window2("127.0.0.1",5000);
+	//	}
 
 }

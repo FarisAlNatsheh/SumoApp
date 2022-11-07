@@ -23,7 +23,7 @@ public class SerialInput{
 			}
 		}
 		System.out.println("Port not found, exiting...");
-		System.exit(0);
+		//System.exit(0);
 	}
 //	public static void main(String args[]) {
 //		new SerialInput("COM27");

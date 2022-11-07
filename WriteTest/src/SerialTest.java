@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import com.fazecast.jSerialComm.*;
 
 
@@ -55,6 +54,6 @@ public class SerialTest{
 
 	}
 	public static void main(String[] args) {
-		new SerialTest("COM22");
+		new SerialTest("COM7");
 	}
 }
